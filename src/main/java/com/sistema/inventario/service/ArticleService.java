@@ -1,3 +1,4 @@
+//hello
 package com.sistema.inventario.service;
 
 import com.sistema.inventario.model.Article;

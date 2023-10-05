@@ -1,3 +1,4 @@
+//hello
 package com.sistema.inventario.model;
 
 import jakarta.persistence.Entity;
