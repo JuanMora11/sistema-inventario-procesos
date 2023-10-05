@@ -1,10 +1,7 @@
 //hello
 package com.sistema.inventario.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -18,4 +15,7 @@ public class Article {
     private String color;
     private String material;
     private String quantity;
+    @ManyToOne
+    @JoinColumn(name = "idCategory", referencedColumnName = "idCategory")
+    private Category category;
 }
