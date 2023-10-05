@@ -18,14 +18,14 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.createCategory(category), HttpStatus.CREATED);
     }
 
-    @GetMapping("categories/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Long id){
-        return ResponseEntity.ok(categoryService.getCategoryById(id));
+    @GetMapping("category/{idCategory}")
+    public ResponseEntity<Category> getCategoryById(@PathVariable Long idCategory){
+        return ResponseEntity.ok(categoryService.getCategoryById(idCategory));
     }
 
-    @PutMapping("categories/{id}")
-    public ResponseEntity<Category> update(@RequestBody Category category, @PathVariable Long id){
-        return ResponseEntity .ok(categoryService.updateCategory(category,id));
+    @PutMapping("categories/{idCategory}")
+    public ResponseEntity<Category> update(@RequestBody Category category, @PathVariable Long idCategory){
+        return ResponseEntity .ok(categoryService.updateCategory(category,idCategory));
     }
 
     @GetMapping("categories")

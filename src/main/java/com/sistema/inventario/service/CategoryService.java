@@ -17,15 +17,14 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-    public Category getCategoryById(Long id){
-        return categoryRepository.findById(id).get();
+    public Category getCategoryById(Long idCategory){
+        return categoryRepository.findById(idCategory).get();
     }
 
-    public Category updateCategory(Category category, Long id){
-        if(categoryRepository.existsById(id)){
-            Category categoryBD = categoryRepository.findById(id).get();
-            categoryBD.setName(category.getName());
-            categoryBD.setDesing(category.getDesing());
+    public Category updateCategory(Category category, Long idCategory){
+        if(categoryRepository.existsById(idCategory)){
+            Category categoryBD = categoryRepository.findById(idCategory).get();
+            categoryBD.setNameCategory(category.getNameCategory());
             return categoryRepository.save(categoryBD);
         }
         return null;
