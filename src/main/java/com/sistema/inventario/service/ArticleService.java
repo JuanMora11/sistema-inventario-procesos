@@ -27,6 +27,7 @@ public class ArticleService {
             articleBd.setColor(article.getColor());
             articleBd.setMaterial(article.getMaterial());
             articleBd.setQuantity(article.getQuantity());
+            articleBd.setCategory(article.getCategory());
             return articleRepository.save(articleBd);
         }
         return null;
