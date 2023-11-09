@@ -1,4 +1,3 @@
-//hello
 package com.sistema.inventario.controller;
 
 import com.sistema.inventario.model.Article;
