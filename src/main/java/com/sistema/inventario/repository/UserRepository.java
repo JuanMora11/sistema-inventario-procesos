@@ -1,10 +1,10 @@
 package com.sistema.inventario.repository;
 
 import com.sistema.inventario.model.User;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import java.util.Optional;
 
-public interface UserRepository extends CrudRepository<User,Long> {
-    List<User> findByFirstNameAndLastName(String firstName, String lastName);
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findOneByEmail(String email);
 }

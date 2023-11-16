@@ -37,7 +37,7 @@ public class User {
     private String phone;
 
     @NotNull(message = "password is required")
-    @Size(min = 8, max = 20, message = "password min 8 and max 20 characters")
+    @Size(min = 8, max = 200, message = "password min 8 and max 20 characters")
     private String password;
 
     @NotNull(message = "document is required")
