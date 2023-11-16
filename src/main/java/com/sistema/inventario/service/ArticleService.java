@@ -20,7 +20,7 @@ public class ArticleService {
     private CategoryService categoryService;
     public Article createArticle(Article article, Long idCategory){
         Category category = categoryService.getCategoryById(idCategory);
-        articulo.setCategory(category);
+        article.setCategory(category);
         return articleRepository.save(article);
     }
     public Article getArticleById(Long id){
