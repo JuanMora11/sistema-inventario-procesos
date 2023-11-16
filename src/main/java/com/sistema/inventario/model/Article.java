@@ -32,7 +32,7 @@ public class Article {
     @NotNull(message = "quantity is required")
     @Size(max = 100, message = "quantity max 100 characters")
     private String quantity;
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name="id_Category", referencedColumnName = "idCategory")
     private Category category;
     /*@JsonIgnore

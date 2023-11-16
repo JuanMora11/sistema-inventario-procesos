@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 public class Category {
@@ -17,6 +19,6 @@ public class Category {
     private String nameCategory;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "Category")
-    List<Article> articuloList;
+    @OneToMany(mappedBy = "category")
+    private List<Article> articuloList;
 }

@@ -3,6 +3,7 @@ package com.sistema.inventario.service;
 
 import com.sistema.inventario.exceptions.NotFoundException;
 import com.sistema.inventario.model.Article;
+import com.sistema.inventario.model.Category;
 import com.sistema.inventario.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
