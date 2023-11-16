@@ -13,9 +13,9 @@ import java.util.List;
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
-    @PostMapping("articles")
-    public ResponseEntity<Article> create(@RequestBody Article article){
-        return new ResponseEntity(articleService.createArticle(article), HttpStatus.CREATED);
+    @PostMapping("articles/{idCategory}")
+    public ResponseEntity<Article> create(@RequestBody Article article, @PathVariable Long idCategory){
+        return new ResponseEntity(articleService.createArticle(article, idCategory), HttpStatus.CREATED);
     }
     @GetMapping("article/{id}")
     public ResponseEntity<Article> getArticleById(@PathVariable Long id){
@@ -28,5 +28,10 @@ public class ArticleController {
     @GetMapping("articles")
     public ResponseEntity<List<Article>> getAll(){
         return ResponseEntity.ok(articleService.findAllArticles());
+    }
+
+    @DeleteMapping("article/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id){
+        return new ResponseEntity(articleService.deleteArticle(id), HttpStatus.NO_CONTENT);
     }
 }

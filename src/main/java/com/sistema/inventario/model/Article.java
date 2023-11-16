@@ -1,6 +1,7 @@
 package com.sistema.inventario.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Generated;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -31,7 +32,10 @@ public class Article {
     @NotNull(message = "quantity is required")
     @Size(max = 100, message = "quantity max 100 characters")
     private String quantity;
-    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="id_Category", referencedColumnName = "idCategory")
+    private Category category;
+    /*@JsonIgnore
     @OneToMany(mappedBy = "article")
-    private List<Category> category;
+    private List<Category> category;*/
 }

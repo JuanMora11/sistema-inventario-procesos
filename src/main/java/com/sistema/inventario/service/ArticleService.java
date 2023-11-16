@@ -5,6 +5,7 @@ import com.sistema.inventario.exceptions.NotFoundException;
 import com.sistema.inventario.model.Article;
 import com.sistema.inventario.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +15,14 @@ import java.util.Optional;
 public class ArticleService {
     @Autowired
     private ArticleRepository  articleRepository;
-    public Article createArticle(Article article){
+
+    @Autowired
+    @Lazy
+    private CategoryService categoryService;
+
+    public Article createArticle(Article article, Long idCategory){
+        Category category = categoryService.getCategoryById(idCategory);
+        articulo.setCategory(category);
         return articleRepository.save(article);
     }
     public Article getArticleById(Long id){
@@ -40,6 +48,15 @@ public class ArticleService {
             return articleRepository.save(articleBd);
         }
         return null;
+    }
+
+    public boolean deleteArticle(Long id){
+        Optional<Article> articleBd=articleRepository.findById(id);
+        if(articleBd.isEmpty()){
+            throw new NotFoundException("Article not found");
+        }
+        articleRepository.delete(articleBd.get());
+        return true;
     }
     public List<Article> findAllArticles(){
         return (List<Article>)articleRepository.findAll();
