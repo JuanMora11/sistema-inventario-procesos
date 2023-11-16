@@ -22,6 +22,7 @@ public class CustomExceptionHandler {
         response.put("Message: ", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MalformedParameterizedTypeException.class)
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex){

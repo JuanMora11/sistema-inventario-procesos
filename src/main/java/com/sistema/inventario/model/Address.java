@@ -30,3 +30,4 @@ public class Address {
     @JoinColumn(name = "idUser",referencedColumnName = "id")
     private User user;
 }
+

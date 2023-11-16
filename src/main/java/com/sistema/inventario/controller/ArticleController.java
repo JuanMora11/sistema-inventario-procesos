@@ -29,7 +29,6 @@ public class ArticleController {
     public ResponseEntity<List<Article>> getAll(){
         return ResponseEntity.ok(articleService.findAllArticles());
     }
-
     @DeleteMapping("article/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
         return new ResponseEntity(articleService.deleteArticle(id), HttpStatus.NO_CONTENT);

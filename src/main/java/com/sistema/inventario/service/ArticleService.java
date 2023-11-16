@@ -33,6 +33,7 @@ public class ArticleService {
         }
         return article.get();
     }
+
     public Article updateArticle(Article article, Long id){
         if (articleRepository.existsById(id)){
             Article articleBd = articleRepository.findById(id).get();

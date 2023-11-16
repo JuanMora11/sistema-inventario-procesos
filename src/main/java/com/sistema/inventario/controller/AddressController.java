@@ -17,17 +17,14 @@ public class AddressController {
     public ResponseEntity<Address> create(@Valid @RequestBody Address address, @PathVariable Long idUser){
         return new ResponseEntity<>(addressService.createAddress(address, idUser), HttpStatus.CREATED);
     }
-
     @PutMapping("address/{id}")
     public ResponseEntity disabled(@PathVariable Long id){
         return ResponseEntity.ok(addressService.disableAddress(id));
     }
-
     @GetMapping("address/{id}")
     public ResponseEntity getById(@PathVariable Long id){
         return ResponseEntity.ok(addressService.getAddressById(id));
     }
-
     @GetMapping("address")
     public ResponseEntity getAll(){
         return ResponseEntity.ok(addressService.getAllAddress());

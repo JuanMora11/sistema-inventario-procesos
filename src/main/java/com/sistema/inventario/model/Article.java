@@ -39,3 +39,4 @@ public class Article {
     @OneToMany(mappedBy = "article")
     private List<Category> category;*/
 }
+
