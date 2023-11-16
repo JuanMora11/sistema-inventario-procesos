@@ -15,11 +15,9 @@ import java.util.Optional;
 public class ArticleService {
     @Autowired
     private ArticleRepository  articleRepository;
-
     @Autowired
     @Lazy
     private CategoryService categoryService;
-
     public Article createArticle(Article article, Long idCategory){
         Category category = categoryService.getCategoryById(idCategory);
         articulo.setCategory(category);

@@ -22,7 +22,6 @@ public class AddressService {
         address.setUser(user);
         return addressRepository.save(address);
     }
-
     public Address disableAddress(Long id) {
         if (id == 0){
             throw new NotFoundException("Address not found");
