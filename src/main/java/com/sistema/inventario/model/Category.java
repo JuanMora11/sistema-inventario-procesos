@@ -1,9 +1,9 @@
 package com.sistema.inventario.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Entity
@@ -11,5 +11,12 @@ import lombok.Data;
 public class Category {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCategory;
+
+    @NotBlank(message = "Name category is required")
+    @Size(max = 100, message = "Name category max 100 characters")
     private String nameCategory;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "Category")
+    List<Article> articuloList;
 }

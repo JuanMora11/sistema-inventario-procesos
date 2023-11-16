@@ -26,7 +26,7 @@ public class User {
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
-    private List<Address> address;
+    private List<Address> addressList;
 
     @NotNull(message = "email is required")
     @Email

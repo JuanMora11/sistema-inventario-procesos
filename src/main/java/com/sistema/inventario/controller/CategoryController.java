@@ -28,8 +28,14 @@ public class CategoryController {
         return ResponseEntity .ok(categoryService.updateCategory(category,idCategory));
     }
 
+    @DeleteMapping("category/{idCategory}")
+    public ResponseEntity<String> delete(@PathVariable Long idCategory){
+        return new ResponseEntity(categoryService.deleteCategory(idCategory), HttpStatus.NO_CONTENT);
+    }
+
     @GetMapping("categories")
-    public ResponseEntity<List<Category>> getAll(){
+    public ResponseEntity<List<Category>> getAll()
+    {
         return ResponseEntity.ok(categoryService.findAllCategories());
     }
 }
