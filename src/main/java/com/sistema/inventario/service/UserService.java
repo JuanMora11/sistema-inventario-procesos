@@ -1,79 +1,74 @@
 package com.sistema.inventario.service;
 
+import com.sistema.inventario.exceptions.AlreadyExistsException;
 import com.sistema.inventario.exceptions.NotFoundException;
 import com.sistema.inventario.model.User;
 import com.sistema.inventario.repository.UserRepository;
+import com.sistema.inventario.util.Constants;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService implements UserDetailsService {
+@RequiredArgsConstructor
+public class UserService {
+
     @Autowired
     private UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private final PasswordEncoder passwordEncoder;
+    public User createUser(User userReq){
+        Optional<User> existingUserByEmail = userRepository.findByEmail(userReq.getEmail());
+        if (existingUserByEmail.isPresent()) {
+            throw new AlreadyExistsException(Constants.USER_EMAIL_EXISTS.getMessage());
+        }
+        userReq.setPassword(passwordEncoder.encode(userReq.getPassword()));
+        return userRepository.save(userReq);
     }
-
-    public User createUser(User user){
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encryptedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encryptedPassword);
-
-        return userRepository.save(user);
-    }
-
     public User getUserById(Long id){
-        if (id == 0){
-            throw new NotFoundException("User id is null");
+        if(id == null)
+        {
+            throw new NotFoundException(Constants.USER_IS_NULL.getMessage());
         }
         Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty()){
-            throw new NotFoundException("User not found");
+        if(user.isEmpty()){
+            throw new NotFoundException(Constants.USER_NOT_FOUND.getMessage());
         }
         return user.get();
     }
-
-    public User updateUser(User user, Long id){
-        if(userRepository.existsById(id)){
-            User userBd = userRepository.findById(id).get();
-            userBd.setFirstName(user.getFirstName());
-            userBd.setLastName(user.getLastName());
-            userBd.setAddressList(user.getAddressList());
-            userBd.setEmail(user.getEmail());
-            userBd.setPhone(user.getPhone());
-            return userRepository.save(userBd);
+    public User updateUser(User userReq, Long id){
+        Optional<User> userBd = userRepository.findById(id);
+        if(userBd.isEmpty()){
+            throw new NotFoundException("User not found");
         }
-        return null;
+        if(!userBd.get().getEmail().equals(userReq.getEmail())){
+            Optional<User> existingUserByEmail = userRepository.findByEmail(userReq.getEmail());
+            if (existingUserByEmail.isPresent()) {
+                throw new AlreadyExistsException(Constants.USER_EMAIL_EXISTS.getMessage());
+            }
+        }
+        userBd.get().setFirstName(userReq.getFirstName());
+        userBd.get().setLastName(userReq.getLastName());
+        userBd.get().setPhone(userReq.getPhone());
+        return userRepository.save(userBd.get());
     }
-    public Boolean deleteUserById(Long id){
-        if(userRepository.existsById(id)){
-            userRepository.deleteById(id);
-            return true;
+
+    public boolean deleteUser(Long id){
+        Optional<User> userBd = userRepository.findById(id);
+        if(userBd.isEmpty()){
+            throw new NotFoundException(Constants.USER_NOT_FOUND.getMessage());
         }
-        return false;
+        userRepository.delete(userBd.get());
+        return true;
     }
 
     public List<User> findAllUsers(){
         return (List<User>) userRepository.findAll();
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> userOptional = userRepository.findOneByEmail(email);
 
-        if (userOptional.isEmpty()) {
-            throw new UsernameNotFoundException("El usuario con email " + email + " no existe.");
-        }
 
-        User user = userOptional.get();
-        return new UserDetailsImpl(user);
-    }
 }
